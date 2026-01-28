@@ -1,15 +1,19 @@
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
 import Header from "./components/Header";
-import CodeEditor from "./components/CodeEditor";
-import Preview from "./components/Preview";
-import ChatComponent from "./components/ChatComponent"; 
 import "./index.scss";
-import { useContext, useEffect } from "react";
+import { lazy, Suspense, useContext, useEffect } from "react";
 import { AIStudioContext } from "./AIStudioContext";
 import { createNewConversationAPI } from "../apis/chat";
 import useUserStore from "../store/userStore";
 import { useChatStore } from "../store/chatStore";
+import CodeEditorSkeleton from "./components/Skeleton/CodeEditorSkeleton";
+import PreviewSkeleton from "./components/Skeleton/PreviewSkeleton";
+import ChatSkeleton from "./components/Skeleton/ChatSkeleton";
+
+const CodeEditor = lazy(() => import("./components/CodeEditor"));
+const Preview = lazy(() => import("./components/Preview"));
+const ChatComponent = lazy(() => import("./components/ChatComponent"));
 
 export default function ReactAiStudio() {
     const { isShow } = useContext(AIStudioContext);
@@ -38,17 +42,23 @@ export default function ReactAiStudio() {
             <div style={{ flex: 1, position: 'relative' }}>
                 <Allotment>
                     <Allotment.Pane minSize={200}>
-                        <CodeEditor />
+                        <Suspense fallback={<CodeEditorSkeleton />}>
+                            <CodeEditor />
+                        </Suspense>
                     </Allotment.Pane>
                     
                     <Allotment.Pane minSize={200}>
-                        <Preview />
+                        <Suspense fallback={<PreviewSkeleton />}>
+                            <Preview />
+                        </Suspense>
                     </Allotment.Pane>
 
                     {/* 根据 isShow 状态动态渲染对话框面板 */}
                     {isShow && (
                         <Allotment.Pane preferredSize={300} minSize={100}>
-                          <ChatComponent />  
+                            <Suspense fallback={<ChatSkeleton />}>
+                                <ChatComponent />
+                            </Suspense>
                         </Allotment.Pane>
                     )}
                 </Allotment>

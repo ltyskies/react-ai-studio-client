@@ -4,7 +4,7 @@ import { Send, Square, User, Bot, FileCode, X, Plus } from 'lucide-react';
 import { useChatStore } from '../../../store/chatStore';
 import { AIStudioContext } from '../../AIStudioContext'; 
 import MarkdownRenderer from './MarkdownRenderer';
-import './ChatStyles.scss';
+import './index.scss';
 import { getToken } from '../../../utils/token';
 import { apiBaseUrl } from '../../../utils/request';
 
