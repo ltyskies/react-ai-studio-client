@@ -1,13 +1,19 @@
 import { createBrowserRouter } from "react-router";
-import App from "../ReactAiStudio";
 import { AuthRoute } from "../components/AuthRoute";
 import Login from "../login";
-import NotFound from "../NotFound";
+import NotFound from "../notFound";
+import './index.scss'
+import { AIStudioProvider } from "../ReactAiStudio/AIStudioContext";
+import ReactPlayground from "../ReactAiStudio";
 
 const router = createBrowserRouter([
     {
         path: '/index',
-        element: <AuthRoute><App/></AuthRoute>,
+        element: <AuthRoute>
+                    <AIStudioProvider>
+                        <ReactPlayground />
+                    </AIStudioProvider>
+        </AuthRoute>,
     },
     {
         path: '/login',

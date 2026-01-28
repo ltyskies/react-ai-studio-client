@@ -1,5 +1,6 @@
 import {request} from '../utils'
 
+
 export function createNewConversationAPI(userId: number){
     return request({
         url:'chat/conversation',

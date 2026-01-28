@@ -1,0 +1,228 @@
+// ChatStyles.scss
+
+// 确保所有元素使用标准盒模型，防止 padding 撑大尺寸
+* {
+  box-sizing: border-box;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  // 修改点：从 100vh 改为 100%，让它适应父级容器的高度
+  // 如果父级没有高度，请确保父级也是 flex 或者有固定高度
+  height: 100%; 
+  background: #fff;
+  overflow: hidden; // 禁止容器自身滚动
+  position: relative;
+
+  .chat-header {
+    padding: 16px 20px;
+    background: #fff;
+    flex-shrink: 0;
+    
+    h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+  }
+
+  hr {
+    margin: 0;
+    border: none;
+    border-bottom: 1px solid #f0f0f0;
+    flex-shrink: 0;
+  }
+}
+
+.messages-viewport {
+  flex: 1;
+  min-height: 0; // 核心：必须设置，否则 flex 子项不会正确缩小
+  position: relative;
+  
+  .vlist-container {
+    height: 100%;
+    // 确保虚拟列表容器不溢出
+    & > div {
+       // virtua 库的内部滚动容器通常需要这个，视情况而定
+    }
+  }
+
+  .message-item {
+    display: flex;
+    gap: 12px;
+    padding: 16px 20px;
+    
+    &.user {
+      flex-direction: row-reverse;
+      .message-bubble {
+        background: #e6f4ff;
+        border-radius: 12px 0 12px 12px;
+      }
+    }
+    
+    &.assistant {
+      .message-bubble {
+        background: #f9f9f9;
+        border-radius: 0 12px 12px 12px;
+      }
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      
+      &.user-avatar { background: #1677ff; color: #fff; }
+      &.assistant-avatar { background: #10a37f; color: #fff; }
+    }
+
+    .message-bubble {
+      max-width: 85%;
+      padding: 10px 14px;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #333;
+      overflow-wrap: break-word;
+      
+      // 打字机光标效果
+      .typing-cursor {
+        display: inline-block;
+        width: 6px;
+        height: 16px;
+        background: #333;
+        margin-left: 4px;
+        vertical-align: middle;
+        animation: blink 1s infinite;
+      }
+    }
+  }
+}
+
+.input-area {
+  padding: 16px 20px 24px;
+  background: #fff;
+  border-top: 1px solid #f0f0f0;
+  flex-shrink: 0; // 核心：保证输入框不被挤扁
+  z-index: 10; // 确保在最上层
+
+  .context-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+    align-items: center;
+
+    .context-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f0f7ff;
+      border: 1px solid #bae0ff;
+      color: #0958d9;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 13px;
+
+      .file-name { max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .remove-btn {
+        background: transparent; border: none; cursor: pointer; color: #999;
+        display: flex; align-items: center; padding: 0;
+        &:hover { color: #ff4d4f; }
+      }
+    }
+
+    .file-picker-container {
+      position: relative;
+      
+      .add-context-btn {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: #fff;
+        border: 1px dashed #d9d9d9;
+        padding: 4px 12px;
+        border-radius: 6px;
+        font-size: 13px;
+        color: #666;
+        cursor: pointer;
+        transition: all 0.2s;
+        &:hover { border-color: #10a37f; color: #10a37f; background: #f6ffed; }
+      }
+
+      .file-picker-dropdown {
+        position: absolute;
+        bottom: calc(100% + 10px);
+        left: 0;
+        background: #fff;
+        border: 1px solid #e5e5e5;
+        border-radius: 8px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        z-index: 1000;
+        min-width: 200px;
+        padding: 6px;
+        max-height: 300px; // 防止菜单过高
+        overflow-y: auto;
+
+        .dropdown-header { font-size: 11px; color: #999; padding: 4px 10px; }
+        .dropdown-item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 8px 10px;
+          font-size: 14px;
+          cursor: pointer;
+          border-radius: 6px;
+          &:hover { background: #f5f5f5; }
+          &.selected { color: #bfbfbf; cursor: not-allowed; }
+        }
+      }
+    }
+  }
+
+  .input-wrapper {
+    position: relative;
+    background: #f4f4f4;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    align-items: flex-end;
+    transition: all 0.2s;
+
+    &:focus-within { background: #fff; border-color: #10a37f; box-shadow: 0 0 0 2px rgba(16, 163, 127, 0.1); }
+
+    textarea {
+      flex: 1;
+      border: none; outline: none; background: transparent;
+      padding: 0 40px 0 8px;
+      font-size: 15px; line-height: 1.5;
+      resize: none;
+      max-height: 150px; // 限制最大高度
+      overflow-y: auto;
+    }
+
+    .button-group {
+      position: absolute; right: 10px; bottom: 8px;
+      .action-button {
+        width: 32px; height: 32px; border-radius: 8px; border: none;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer;
+        transition: background 0.2s;
+        &.send-btn { background: #10a37f; color: #fff; &:disabled { background: #e5e5e5; color: #acacac; cursor: default; } }
+        &.stop-btn { background: #000; color: #fff; }
+        &:hover:not(:disabled) { opacity: 0.9; }
+      }
+    }
+  }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}

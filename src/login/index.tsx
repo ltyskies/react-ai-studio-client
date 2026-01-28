@@ -5,23 +5,38 @@ import { loginAPI } from '../apis/user';
 import { useNavigate } from 'react-router';
 import { setToken } from '../utils/token';
 import './index.scss'; 
+import useUserStore from '../store/userStore';
 
 type FieldType = {
   email: string;
   password: string;
 };
 
+interface LoginResponse {
+  code: number;
+  data: {
+    token: string;
+    id: number;
+    email: string;
+    createdAt: string;
+  };
+}
+
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
 
+  const { setUserId } = useUserStore();
+
   const onFinish: FormProps<FieldType>['onFinish'] = async (values: FieldType) => {
     try {
-      const res: any = await loginAPI(values);
+      const res: LoginResponse | any = await loginAPI(values);
 
       if (res.code === 200) {
         message.success('登录成功，正在跳转...');
+        console.log('登录成功，返回数据：', res.data);
         setToken(res.data.token);
+        setUserId(res.data.id);
         setTimeout(() => {
           navigate('/index');
         }, 800);
