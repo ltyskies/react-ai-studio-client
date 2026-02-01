@@ -79,6 +79,7 @@ export default function Header() {
           onConfirm={handleLogout}
           okText="确定"
           cancelText="取消"
+          placement="bottomRight"
         >
           <LogoutOutlined 
             title='退出登录'

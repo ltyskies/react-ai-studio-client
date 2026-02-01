@@ -1,21 +1,23 @@
-.preview-skeleton {
+// index.module.scss
+
+.previewSkeleton {
   width: 100%;
   height: 100%;
-  background-color: #f9f9f9; // 比编辑器稍浅一点，模拟预览区的白底
+  background-color: #f9f9f9;
   display: flex;
-  align-items: center;      // 垂直居中
-  justify-content: center;   // 水平居中
+  align-items: center;
+  justify-content: center;
   position: relative;
   overflow: hidden;
 
-  .loading-text {
+  .loadingText {
     font-size: 14px;
     color: #999;
     letter-spacing: 2px;
-    z-index: 1; // 确保文字在动画层之上
+    z-index: 1;
   }
 
-  // 微光动画效果
+  // 这里的 &.skeleton 对应 styles.previewSkeleton 且同时拥有 styles.skeleton 时
   &.skeleton::after {
     content: "";
     position: absolute;

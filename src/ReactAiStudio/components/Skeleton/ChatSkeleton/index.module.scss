@@ -1,4 +1,6 @@
-.chat-skeleton {
+// index.module.scss
+
+.chatSkeleton {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -8,7 +10,7 @@
   overflow: hidden;
 
   // 1. 聊天头部 
-  .chat-header-skeleton {
+  .chatHeaderSkeleton {
     height: 60px;
     display: flex;
     align-items: center;
@@ -23,4 +25,8 @@
     }
   }
 
+  // 这里的消息区域占位，确保样式名称对应
+  .messagesViewportSkeleton {
+    flex: 1;
+  }
 }

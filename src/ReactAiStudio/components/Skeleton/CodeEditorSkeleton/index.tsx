@@ -1,11 +1,12 @@
-import './index.scss'
+import styles from './index.module.scss';
 
 const CodeEditorSkeleton = () => {
     return (
-        <div className="code-editor-skeleton">
-            <div className="file-list-skeleton"></div>
-            <div className="editor-content-skeleton skeleton"></div>
+        <div className={styles.codeEditorSkeleton}>
+            <div className={styles.fileListSkeleton}></div>
+            <div className={`${styles.editorContentSkeleton} ${styles.skeleton}`}></div>
         </div>
     );
 }
+
 export default CodeEditorSkeleton;

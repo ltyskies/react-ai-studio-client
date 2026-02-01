@@ -1,21 +1,20 @@
-// ChatStyles.scss
+// index.module.scss
 
-// 确保所有元素使用标准盒模型，防止 padding 撑大尺寸
-* {
-  box-sizing: border-box;
-}
-
-.chat-container {
+.chatContainer {
   display: flex;
   flex-direction: column;
-  // 修改点：从 100vh 改为 100%，让它适应父级容器的高度
-  // 如果父级没有高度，请确保父级也是 flex 或者有固定高度
   height: 100%; 
   background: #fff;
-  overflow: hidden; // 禁止容器自身滚动
+  overflow: hidden;
   position: relative;
+  box-sizing: border-box;
 
-  .chat-header {
+  // 处理内部所有元素的盒模型
+  :global {
+    * { box-sizing: border-box; }
+  }
+
+  .chatHeader {
     padding: 16px 20px;
     background: #fff;
     flex-shrink: 0;
@@ -28,7 +27,7 @@
     }
   }
 
-  hr {
+  .divider {
     margin: 0;
     border: none;
     border-bottom: 1px solid #f0f0f0;
@@ -36,34 +35,30 @@
   }
 }
 
-.messages-viewport {
+.messagesViewport {
   flex: 1;
-  min-height: 0; // 核心：必须设置，否则 flex 子项不会正确缩小
+  min-height: 0;
   position: relative;
   
-  .vlist-container {
+  .vlistContainer {
     height: 100%;
-    // 确保虚拟列表容器不溢出
-    & > div {
-       // virtua 库的内部滚动容器通常需要这个，视情况而定
-    }
   }
 
-  .message-item {
+  .messageItem {
     display: flex;
     gap: 12px;
     padding: 16px 20px;
     
     &.user {
       flex-direction: row-reverse;
-      .message-bubble {
+      .messageBubble {
         background: #e6f4ff;
         border-radius: 12px 0 12px 12px;
       }
     }
     
     &.assistant {
-      .message-bubble {
+      .messageBubble {
         background: #f9f9f9;
         border-radius: 0 12px 12px 12px;
       }
@@ -78,11 +73,11 @@
       justify-content: center;
       flex-shrink: 0;
       
-      &.user-avatar { background: #1677ff; color: #fff; }
-      &.assistant-avatar { background: #10a37f; color: #fff; }
+      &.userAvatar { background: #1677ff; color: #fff; }
+      &.assistantAvatar { background: #10a37f; color: #fff; }
     }
 
-    .message-bubble {
+    .messageBubble {
       max-width: 85%;
       padding: 10px 14px;
       font-size: 15px;
@@ -90,8 +85,7 @@
       color: #333;
       overflow-wrap: break-word;
       
-      // 打字机光标效果
-      .typing-cursor {
+      .typingCursor {
         display: inline-block;
         width: 6px;
         height: 16px;
@@ -104,21 +98,21 @@
   }
 }
 
-.input-area {
+.inputArea {
   padding: 16px 20px 24px;
   background: #fff;
   border-top: 1px solid #f0f0f0;
-  flex-shrink: 0; // 核心：保证输入框不被挤扁
-  z-index: 10; // 确保在最上层
+  flex-shrink: 0;
+  z-index: 10;
 
-  .context-bar {
+  .contextBar {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 10px;
     align-items: center;
 
-    .context-chip {
+    .contextChip {
       display: flex;
       align-items: center;
       gap: 6px;
@@ -129,18 +123,18 @@
       border-radius: 6px;
       font-size: 13px;
 
-      .file-name { max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-      .remove-btn {
+      .fileName { max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .removeBtn {
         background: transparent; border: none; cursor: pointer; color: #999;
         display: flex; align-items: center; padding: 0;
         &:hover { color: #ff4d4f; }
       }
     }
 
-    .file-picker-container {
+    .filePickerContainer {
       position: relative;
       
-      .add-context-btn {
+      .addContextBtn {
         display: flex;
         align-items: center;
         gap: 4px;
@@ -155,7 +149,7 @@
         &:hover { border-color: #10a37f; color: #10a37f; background: #f6ffed; }
       }
 
-      .file-picker-dropdown {
+      .filePickerDropdown {
         position: absolute;
         bottom: calc(100% + 10px);
         left: 0;
@@ -166,11 +160,11 @@
         z-index: 1000;
         min-width: 200px;
         padding: 6px;
-        max-height: 300px; // 防止菜单过高
+        max-height: 300px;
         overflow-y: auto;
 
-        .dropdown-header { font-size: 11px; color: #999; padding: 4px 10px; }
-        .dropdown-item {
+        .dropdownHeader { font-size: 11px; color: #999; padding: 4px 10px; }
+        .dropdownItem {
           display: flex;
           align-items: center;
           gap: 10px;
@@ -185,7 +179,7 @@
     }
   }
 
-  .input-wrapper {
+  .inputWrapper {
     position: relative;
     background: #f4f4f4;
     border: 1px solid #e5e5e5;
@@ -203,19 +197,19 @@
       padding: 0 40px 0 8px;
       font-size: 15px; line-height: 1.5;
       resize: none;
-      max-height: 150px; // 限制最大高度
+      max-height: 150px;
       overflow-y: auto;
     }
 
-    .button-group {
+    .buttonGroup {
       position: absolute; right: 10px; bottom: 8px;
-      .action-button {
+      .actionButton {
         width: 32px; height: 32px; border-radius: 8px; border: none;
         display: flex; align-items: center; justify-content: center;
         cursor: pointer;
         transition: background 0.2s;
-        &.send-btn { background: #10a37f; color: #fff; &:disabled { background: #e5e5e5; color: #acacac; cursor: default; } }
-        &.stop-btn { background: #000; color: #fff; }
+        &.sendBtn { background: #10a37f; color: #fff; &:disabled { background: #e5e5e5; color: #acacac; cursor: default; } }
+        &.stopBtn { background: #000; color: #fff; }
         &:hover:not(:disabled) { opacity: 0.9; }
       }
     }

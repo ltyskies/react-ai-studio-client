@@ -4,7 +4,7 @@ import { Send, Square, User, Bot, FileCode, X, Plus } from 'lucide-react';
 import { useChatStore } from '../../../store/chatStore';
 import { AIStudioContext } from '../../AIStudioContext'; 
 import MarkdownRenderer from './MarkdownRenderer';
-import './index.scss';
+import styles from './index.module.scss';
 import { getToken } from '../../../utils/token';
 import { apiBaseUrl } from '../../../utils/request';
 
@@ -144,27 +144,27 @@ const AIChat = () => {
   }, [input]);
 
   return (
-    <div className="chat-container">
-      <header className="chat-header">
+    <div className={styles.chatContainer}>
+      <header className={styles.chatHeader}>
         <h2>AI 助手</h2>
       </header>
-      <hr />
+      <hr className={styles.divider} />
       
-      <div className="messages-viewport">
+      <div className={styles.messagesViewport}>
         <VList 
           ref={scrollRef} 
-          className="vlist-container"
+          className={styles.vlistContainer}
           onScroll={handleScroll}
         >
           {messages.map((msg, i) => (
-            <div key={i} className={`message-item ${msg.role}`}>
-              <div className={`avatar ${msg.role}-avatar`}>
+            <div key={i} className={`${styles.messageItem} ${styles[msg.role]}`}>
+              <div className={`${styles.avatar} ${styles[`${msg.role}Avatar`]}`}>
                 {msg.role === 'user' ? <User size={18} /> : <Bot size={18} />}
               </div>
-              <div className="message-bubble">
+              <div className={styles.messageBubble}>
                 <MarkdownRenderer content={msg.content} />
                 {isTyping && i === messages.length - 1 && msg.role === 'assistant' && (
-                  <span className="typing-cursor" />
+                  <span className={styles.typingCursor} />
                 )}
               </div>
             </div>
@@ -172,29 +172,29 @@ const AIChat = () => {
         </VList>
       </div>
 
-      <div className="input-area">
-        <div className="context-bar">
+      <div className={styles.inputArea}>
+        <div className={styles.contextBar}>
           {contextFiles.map(name => (
-            <div key={name} className="context-chip">
+            <div key={name} className={styles.contextChip}>
               <FileCode size={12} />
-              <span className="file-name">{name}</span>
-              <button className="remove-btn" onClick={() => setContextFiles(prev => prev.filter(f => f !== name))}>
+              <span className={styles.fileName}>{name}</span>
+              <button className={styles.removeBtn} onClick={() => setContextFiles(prev => prev.filter(f => f !== name))}>
                 <X size={12} />
               </button>
             </div>
           ))}
           
-          <div className="file-picker-container" ref={pickerRef}>
-            <button className="add-context-btn" onClick={() => setShowFilePicker(!showFilePicker)}>
+          <div className={styles.filePickerContainer} ref={pickerRef}>
+            <button className={styles.addContextBtn} onClick={() => setShowFilePicker(!showFilePicker)}>
               <Plus size={14} /> Context
             </button>
             {showFilePicker && (
-              <div className="file-picker-dropdown">
-                <div className="dropdown-header">选择文件作为上下文</div>
+              <div className={styles.filePickerDropdown}>
+                <div className={styles.dropdownHeader}>选择文件作为上下文</div>
                 {Object.keys(files).map(name => (
                   <div 
                     key={name} 
-                    className={`dropdown-item ${contextFiles.includes(name) ? 'selected' : ''}`}
+                    className={`${styles.dropdownItem} ${contextFiles.includes(name) ? styles.selected : ''}`}
                     onClick={() => {
                       if(!contextFiles.includes(name)) setContextFiles([...contextFiles, name]);
                       setShowFilePicker(false);
@@ -209,7 +209,7 @@ const AIChat = () => {
           </div>
         </div>
 
-        <div className="input-wrapper">
+        <div className={styles.inputWrapper}>
           <textarea
             ref={textareaRef}
             value={input}
@@ -218,13 +218,13 @@ const AIChat = () => {
             placeholder="问问我有关代码的问题..."
             rows={1}
           />
-          <div className="button-group">
+          <div className={styles.buttonGroup}>
             {isTyping ? (
-              <button onClick={() => abortControllerRef.current?.abort()} className="action-button stop-btn">
+              <button onClick={() => abortControllerRef.current?.abort()} className={`${styles.actionButton} ${styles.stopBtn}`}>
                 <Square size={16} fill="currentColor" />
               </button>
             ) : (
-              <button onClick={handleSend} disabled={!input.trim()} className="action-button send-btn">
+              <button onClick={handleSend} disabled={!input.trim()} className={`${styles.actionButton} ${styles.sendBtn}`}>
                 <Send size={16} />
               </button>
             )}

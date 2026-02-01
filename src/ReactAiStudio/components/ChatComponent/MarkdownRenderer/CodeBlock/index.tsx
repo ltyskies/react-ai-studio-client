@@ -1,8 +1,8 @@
 import { Check, Copy } from 'lucide-react';
 import { memo, useState } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-// 👇 关键：导入具体的主题对象，这里取名为 prismTheme 以免和组件名冲突
 import { oneLight as prismTheme } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import styles from './index.module.scss';
 
 const CodeBlock = memo(({ language, value }: { language: string; value: string }) => {
   const [copied, setCopied] = useState(false);
@@ -14,21 +14,21 @@ const CodeBlock = memo(({ language, value }: { language: string; value: string }
   };
 
   return (
-    <div className="code-block-wrapper">
-      <div className="code-header">
+    <div className={styles.codeBlockWrapper}>
+      <div className={styles.codeHeader}>
         <span>{language}</span>
-        <button onClick={onCopy} className="copy-btn">
+        <button onClick={onCopy} className={styles.copyBtn}>
           {copied ? <Check size={14} /> : <Copy size={14} />}
           {copied ? '已复制' : '复制'}
         </button>
       </div>
       <SyntaxHighlighter
         language={language}
-        style={prismTheme} // ✅ 使用导入的主题对象
+        style={prismTheme}
         customStyle={{ 
           margin: 0, 
           borderRadius: '0 0 8px 8px',
-          background: '#f5f5f5', 
+          background: 'transparent', 
           fontSize: '14px'
         }}
         codeTagProps={{

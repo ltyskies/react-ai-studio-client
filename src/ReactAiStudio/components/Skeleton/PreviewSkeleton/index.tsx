@@ -1,9 +1,11 @@
-import './index.scss'
+import styles from './index.module.scss';
+
 const PreviewSkeleton = () => {
     return (
-        <div className="preview-skeleton skeleton">
-            <span className="loading-text">预览中...</span>
+        <div className={`${styles.previewSkeleton} ${styles.skeleton}`}>
+            <span className={styles.loadingText}>预览中...</span>
         </div>
     );
 }
+
 export default PreviewSkeleton;
