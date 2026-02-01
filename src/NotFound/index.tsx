@@ -1,13 +1,13 @@
 import React from 'react';
 import { Button, Result } from 'antd';
 import { useNavigate } from 'react-router';
-import './index.scss';
+import styles from './index.module.scss'; 
 
 const NotFound: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="not-found-page">
+    <div className={styles.notFoundPage}>
       <Result
         status="404"
         title="404"
@@ -17,7 +17,7 @@ const NotFound: React.FC = () => {
             type="primary" 
             size="large" 
             onClick={() => navigate('/index')}
-            className="back-btn"
+            className={styles.backBtn} 
           >
             返回首页
           </Button>

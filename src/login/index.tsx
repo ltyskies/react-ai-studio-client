@@ -4,7 +4,7 @@ import { Button, Form, Input, Card, message } from 'antd';
 import { loginAPI } from '../apis/user';
 import { useNavigate } from 'react-router';
 import { setToken } from '../utils/token';
-import './index.scss'; 
+import styles from './index.module.scss'; 
 import useUserStore from '../store/userStore';
 
 type FieldType = {
@@ -50,12 +50,12 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="login-page">
-      <div className="login-overlay">
-        <Card className="login-card" bordered={false}>
-          <div className="login-header">
-            <h1 className="login-title">React AI Studio</h1>
-            <p className="login-subtitle">请登录您的账号</p>
+    <div className={styles.loginPage}>
+      <div className={styles.loginOverlay}>
+        <Card className={styles.loginCard} bordered={false}>
+          <div className={styles.loginHeader}>
+            <h1 className={styles.loginTitle}>React AI Studio</h1>
+            <p className={styles.loginSubtitle}>请登录您的账号</p>
           </div>
           
           <Form
@@ -86,7 +86,7 @@ const Login: React.FC = () => {
             </Form.Item>
 
             <Form.Item>
-              <Button type="primary" htmlType="submit" block className="login-button">
+              <Button type="primary" htmlType="submit" block className={styles.loginButton}>
                 立即登录
               </Button>
             </Form.Item>

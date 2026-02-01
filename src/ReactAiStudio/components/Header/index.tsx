@@ -80,10 +80,11 @@ export default function Header() {
           okText="确定"
           cancelText="取消"
           placement="bottomRight"
+          arrow={false}
         >
           <LogoutOutlined 
             title='退出登录'
-            style={{ marginLeft: '16px', fontSize: '18px', cursor: 'pointer' }} 
+            style={{ marginLeft: '16px', fontSize: '18px', cursor: 'pointer', marginRight: '8px' }} 
           />
         </Popconfirm>
       </div>
