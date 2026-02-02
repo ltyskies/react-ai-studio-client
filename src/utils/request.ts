@@ -2,7 +2,7 @@ import axios from 'axios'
 import { getToken,removeToken } from './token'
 import router from '../router'
 
-export const apiBaseUrl = (import.meta as any)?.env?.VITE_API_BASE || 'http://127.0.0.1:3000'
+export const apiBaseUrl = '/api'
 
 const request = axios.create({
     baseURL: apiBaseUrl,
