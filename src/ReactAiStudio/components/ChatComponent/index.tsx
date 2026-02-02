@@ -3,10 +3,12 @@ import { VList, type VListHandle } from 'virtua';
 import { Send, Square, User, Bot, FileCode, X, Plus } from 'lucide-react';
 import { useChatStore } from '../../../store/chatStore';
 import { AIStudioContext } from '../../AIStudioContext'; 
-import MarkdownRenderer from './MarkdownRenderer';
 import styles from './index.module.scss';
 import { getToken } from '../../../utils/token';
 import { apiBaseUrl } from '../../../utils/request';
+import React from 'react';
+
+const MarkdownRenderer = React.lazy(() => import('./MarkdownRenderer'));
 
 const AIChat = () => {
   const { messages, conversationId, isTyping, addMessage, updateLastMessage, setIsTyping } = useChatStore();
