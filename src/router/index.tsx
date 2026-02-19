@@ -3,7 +3,7 @@ import { AuthRoute } from "../components/AuthRoute";
 import Login from "../login";
 import NotFound from "../notFound";
 import { AIStudioProvider } from "../ReactAiStudio/AIStudioContext";
-import ReactPlayground from "../ReactAiStudio";
+import ReactAiStudio from "../ReactAiStudio";
 import './index.module.scss'; 
 
 const router = createBrowserRouter([
@@ -12,7 +12,7 @@ const router = createBrowserRouter([
         element: (
             <AuthRoute>
                 <AIStudioProvider>
-                    <ReactPlayground />
+                    <ReactAiStudio />
                 </AIStudioProvider>
             </AuthRoute>
         ),
