@@ -23,7 +23,6 @@ export default function ReactAiStudio() {
     const { setConversationId } = useChatStore();
  
     useEffect(() => {
-        // 1. Define the async logic
         const initializeConversation = async () => {
             try {
                 const res = await createNewConversationAPI(id);
@@ -33,7 +32,6 @@ export default function ReactAiStudio() {
             }
         };
 
-        // 2. Execute it
         initializeConversation();
     }, [id, setConversationId]); 
     return (

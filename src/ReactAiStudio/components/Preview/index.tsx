@@ -15,7 +15,7 @@ interface MessageData {
 
 export default function Preview() {
 
-    const { files} = useContext(AIStudioContext)
+    const { files } = useContext(AIStudioContext)
     const [compiledCode, setCompiledCode] = useState('')
     const [error, setError] = useState('')
 
